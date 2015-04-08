@@ -1,0 +1,24 @@
+Square or Rectangle
+===================
+
+Square_Or_Rectangle provides functions for identifying a shape based on given values
+
+Determining Square or Rectangle
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The function :func:`source.square_or_rectangle.determine_square_or_rectangle` provides users with a way to provide a set of four sides of a quadrilateral and return the kind of quadrilateral it is ("square", "rectangle", or "invalid")
+
+Square Example
+^^^^^^^^^^^^^^^
+
+>>> from source.square_or_rectangle import determine_square_or_rectangle
+>>> determine_square_or_rectangle(2, 2, 2, 2)
+'square'
+
+
+
+Module Reference
+^^^^^^^^^^^^^^^^
+
+.. automodule:: source.square_or_rectangle
+    :members:
