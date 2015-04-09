@@ -35,6 +35,7 @@ I would say that the following is the simplest way to print the author name:
     git shortlog -sn
 
 This will generate a list of authors for the present repository, but excludes other unnecessary information.
+I don't know why the codeblock above is not showing, but there is one (view the raw file if needed).
 
 During this lab did you explore Tortoise Git or GIT Extensions? If not take a look at them, they probably would be useful for the remainder of the class
 ========================================================================================================================================================
