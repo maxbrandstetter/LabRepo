@@ -1,4 +1,2 @@
-# LabRepo
-Contains labs for CST236
-
-Time to learn!
+# cst236
+Class Materials for CST 236
