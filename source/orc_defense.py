@@ -24,10 +24,10 @@ def orc_defense_system(s = 10, d = 300, selection = 0):
         sys.exit(1)
 
     if choice == 'D':
-        print (trial_orc.distance)
+        return trial_orc.distance
 
     if choice == 'S':
-        print (trial_orc.speed)
+        return trial_orc.speed
         
     if trial_orc.distance <= 200:
         return "Perimeter Breach"

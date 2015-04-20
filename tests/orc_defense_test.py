@@ -16,7 +16,9 @@ class TestDefenses(TestCase):
         self.assertEqual(cm.exception.code, 1)
 
     def test_distance_indicator(self):
-        
+        result = orc_defense_system(10, 300, 'D')
+        self.assertEqual(result, 300)
 
     def test_speed_indicator(self):
-        
+        result = orc_defense_system(10, 300, 'S')
+        self.assertEqual(result, 10)
