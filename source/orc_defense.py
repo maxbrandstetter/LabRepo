@@ -76,13 +76,38 @@ def orc_defense_system(s = 10, d = 300, selection = 0, orc = 1, u = 'metric'):
         print [Orc.orc_type for Orc in orcList]
         print [Orc.orc_id for Orc in orcList]
         print (" ")
-        print ("Select targeting priority.")
+        print ("Select targeting priority")
         target = '0'
         priority = 2
         for Orc in orcList:
             if target in Orc.orc_id:
                 Orc.priority = priority
                 return Orc.priority
+
+    if choice == 'F':
+        print ("Select the orc you would like to get the details of")
+        print [Orc.orc_id for Orc in orcList]
+        print (" ")
+        target = '0'
+        for Orc in orcList:
+            if target in Orc.orc_id:
+                print Orc.speed, Orc.distance, Orc.orc_type
+                return "Details Given"
+
+    if choice == 'G':
+        print ("Number of orcs to generate?")
+        print (" ")
+        toGenerate = 5
+        from random import randint
+        while (toGenerate > 0):
+            orcList.append(Orc(randint(1,30), randint(200,1000), randint(1,8)))
+            toGenerate -= 1
+        return True
+
+    if choice == 'ENTer the Trees':
+        del orcList[:]
+        print [Orc.orc_id for Orc in orcList]
+        return orcList
             
     if choice == '?':
         display_options()

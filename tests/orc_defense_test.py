@@ -50,6 +50,18 @@ class TestDefenses(TestCase):
     def test_set_priority(self):
         result = orc_defense_system(10, 300, 'P')
         self.assertEqual(result, 2)
+
+    def test_orc_identification(self):
+        result = orc_defense_system(10, 300, 'F')
+        self.assertEqual(result, 'Details Given')
+
+    def test_orc_generation(self):
+        result = orc_defense_system(10, 300, 'G')
+        self.assertTrue(result)
+
+    def test_remove_all_orcs(self):
+        result = orc_defense_system(10, 300, 'ENTer the Trees')
+        self.assertEqual(result, [])
         
         
         
