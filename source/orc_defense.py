@@ -8,6 +8,23 @@ import sys
 
 def orc_defense_system(s = 10, d = 300, selection = 0, orc = 1, u = 'metric'):
 
+    """
+    Simulate the orc defense system through preprogrammed situations
+    :param s: The speed of the test orc
+    :type s: int or float
+
+    :param d: The distance of the test orc from the base
+    :type d: int or float
+
+    :param selection: The user's input for handling of commands and such
+    :type selection: int or str
+
+    :param orc: The orc type, represented by a number (1-8)
+    :type orc: int
+
+    :param u: The units of measurement that the program uses
+    :type u: str
+    """
     global units
     units = u
 
