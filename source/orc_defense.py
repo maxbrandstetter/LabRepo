@@ -1,5 +1,5 @@
 """
-Round 1: Meant to simulate an Orc defense system, as well as classes for necessary objects
+Round 1-3: Meant to simulate an Orc defense system, as well as classes for necessary objects
 
 To keep it simple, a lot of functions are self guided, despite alluding to otherwise.
 If this is an issue, I can redo those portions to allow for user input.
