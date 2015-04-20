@@ -22,3 +22,34 @@ class TestDefenses(TestCase):
     def test_speed_indicator(self):
         result = orc_defense_system(10, 300, 'S')
         self.assertEqual(result, 10)
+
+    def test_show_options(self):
+        result = orc_defense_system(10, 300, '?')
+        self.assertTrue(result)
+
+    def test_orc_types(self):
+        result = orc_defense_system(10, 300, 'T', 4)
+        self.assertEqual(result, 4)
+
+    def test_orc_removal(self):
+        result = orc_defense_system(10, 300, 'R')
+        self.assertEqual(result, 'Target Removed')
+
+    def test_alternate_units_imperial(self):
+        result = orc_defense_system(10, 300, 'S', 1, 'imperial')
+        self.assertEqual(result, 32.8)
+
+    def test_alternate_units_parsec(self):
+        result = orc_defense_system(10, 300, 'S', 1, 'parsec')
+        self.assertEqual(result, 3.24*10**-16)
+
+    def test_alternate_units_nautical(self):
+        result = orc_defense_system(10, 300, 'S', 1, 'nautical')
+        self.assertEqual(result, 19.4)
+
+    def test_set_priority(self):
+        result = orc_defense_system(10, 300, 'P')
+        self.assertEqual(result, 2)
+        
+        
+        
