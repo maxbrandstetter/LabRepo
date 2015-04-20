@@ -36,6 +36,12 @@ def orc_defense_system(s = 10, d = 300, selection = 0, orc = 1, u = 'metric'):
     def display_options():
         print ("D (Display only distances of current orcs)")
         print ("S (Display only speeds of current orcs)")
+        print ("T (Display only the types of current orcs)")
+        print ("R (Remove the selected orc)")
+        print ("P (Set targeting priority for current orcs)")
+        print ("F (Retrieves details of the selected orc)")
+        print ("G (Generates orcs for simulation)")
+        print ("ENTer the Trees (Removes all orcs)")
         print ("X (Exits the interface)")
 
     if units == 'imperial':
