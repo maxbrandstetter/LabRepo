@@ -15,12 +15,15 @@ class Calculator():
 
     def __init__(self):
         self.readSuccess = False
-        self.writeSuccess = False
+        self.startup = False
         self.distance = 100
         self.connectSpeed = 10
         self.speed = None
         self.size = None
         self.city_name = None
+        self.route_distance = None
+        self.latency = None
+        self.drive_speed = None
 
     def read_file(self, filename=None):
         """
@@ -49,16 +52,20 @@ class Calculator():
         self.speed = speed
         return speed
 
-    def get_size(self, hdsize=1000):
+    def get_size(self, hdsize=1000, drive_speed=3):
         """
         Accept input regarding hard drive size and return that value in GB.
         For simplicity, this does not accept input and always returns 1024.
-        :param size: The entered size
-        :type size: int
+        :param hdsize: The entered size
+        :type hdsize: int
+
+        :param drive_speed: The entered drive speed
+        :type drive_speed: int
 
         :return: int
         """
         self.size = hdsize
+        self.drive_speed = drive_speed
         return hdsize
 
     def get_city(self, city=None, city_distance=None):
@@ -77,6 +84,11 @@ class Calculator():
             city = 'Portland'
             return city
         else:
+            if self.startup is False:
+                self.city_name = city
+                self.startup = True
+                return city
+
             self.distance = city_distance
             self.city_name = city
             return city
@@ -120,10 +132,8 @@ class Calculator():
         """
         if preset == 'Camry':
             self.speed = 60
-            return
         if preset == 'Ferrari':
             self.speed = 100
-            return
         else:
             return
 
@@ -145,4 +155,31 @@ class Calculator():
         else:
             logger.error('No such file found')
             return False
+
+    def create_route(self):
+        """
+        Assembles a route based on user input of cities.
+        For simplicity, this does not accept input.  A while loop could be inserted with user input
+        as a parameter to account for route creation.
+
+        :return: None
+        """
+        other_distance = 50
+        total = self.distance
+        total += other_distance
+
+        self.route_distance = total
+
+    def get_latency(self, latency=2):
+        """
+        Accept input regarding the latency and return that value.
+        For simplicity, this does not accept input and always returns 2
+        :param latency: The estimated latency
+        :type latency: int or float or double
+
+        :return: None
+        """
+        self.latency = latency
+        self.connectSpeed -= self.latency
+
 

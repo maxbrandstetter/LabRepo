@@ -49,3 +49,31 @@ def step_impl(context):
 @Then('write the data to a file')
 def step_impl(context):
     assert context.calc.write_to_file() is True
+
+@When('a new route is entered')
+def step_impl(context):
+    context.calc.create_route()
+
+@Then('return total distance')
+def step_impl(context):
+    assert context.calc.route_distance == 150
+
+@When('a starting city is entered')
+def step_impl(context):
+    context.calc.get_city('Salem')
+
+@Then('store that city')
+def step_impl(context):
+    assert context.calc.city_name == 'Salem'
+
+@When('an expected latency is entered')
+def step_impl(context):
+    context.calc.get_latency()
+
+@Then('needed values are changed')
+def step_impl(context):
+    assert context.calc.latency == 2
+
+@Then('get drive speed')
+def step_impl(context):
+    assert context.calc.drive_speed == 3

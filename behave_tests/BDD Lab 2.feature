@@ -40,3 +40,23 @@ Feature: BDD What is Faster
     Given the user is researching speeds
     When a new city is entered
     Then write the data to a file
+
+  Scenario: Create Route
+    Given the user is researching speeds
+    When a new route is entered
+    Then return total distance
+
+  Scenario: Startup City Selection
+    Given the user is researching speeds
+    When a starting city is entered
+    Then store that city
+
+  Scenario: Network Latency
+    Given the user is researching speeds
+    When an expected latency is entered
+    Then needed values are changed
+
+  Scenario: Hard Drive Speed
+    Given the user is researching speeds
+    When a hard drive size is entered
+    Then get drive speed
