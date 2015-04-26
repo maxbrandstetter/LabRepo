@@ -1,8 +1,10 @@
 """
-Round 1-3: Meant to simulate an Orc defense system, as well as classes for necessary objects
+:mod:`source.orc_defense` -- Example source code
+================================================
+
+Meant to simulate an Orc defense system, as well as classes for necessary objects.
 
 To keep it simple, a lot of functions are self guided, despite alluding to otherwise.
-If this is an issue, I can redo those portions to allow for user input.
 """
 import sys
 
@@ -29,11 +31,17 @@ def orc_defense_system(s = 10, d = 300, selection = 0, orc = 1, u = 'metric'):
     units = u
 
     def display_menu():
+        """
+        Displays a menu through which one could implement user input.
+        """
         print ("Welcome to the ODI (Orc Defense Interface)")
         print ("Please select an action")
         print (" ")
         
     def display_options():
+        """
+        On the passing of a statement below, all possible input options are displayed.
+        """
         print ("D (Display only distances of current orcs)")
         print ("S (Display only speeds of current orcs)")
         print ("T (Display only the types of current orcs)")
@@ -54,11 +62,10 @@ def orc_defense_system(s = 10, d = 300, selection = 0, orc = 1, u = 'metric'):
         s *= 1.94
         d *= 0.00054
 
-    """
-    orc_type is implemented with modulo to restrict the number
-    of types to 8 without defining those types explicitly
-    """
     class Orc():
+        """
+        A simple class to hold data regarding individual orcs.
+        """
         class_counter = 0
         def __init__(self, speed, distance, orc_type):
             self.speed = speed

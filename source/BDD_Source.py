@@ -1,5 +1,8 @@
 """
-Source Code for BDD Rounds
+:mod:`source.BDD_Source` -- Example source code
+===============================================
+
+The following example code assists in calculating transfer speeds
 """
 
 import logging

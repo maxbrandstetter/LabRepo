@@ -19,7 +19,7 @@ Super allows us to make add variations to inherited functions, while maintaining
 Were there any job stories that did not meet the criteria we discussed in class?  How did you handle this case?
 ===============================================================================================================
 
-From what I could tell through working through the lab and rereading the job stories, none of them went blatantly outside of the criteria we discussed.  However, due to the nature of the assignment, the results expected from some of the tests were ambiguous and relied on our implementation, however simple or complex that may be.  In these cases, I generally consider the scenarios briefly, implemented them, then reworked them if I found my initial plans to be inefficient or otherwise faulty.
+From what I could tell through working through the lab and rereading the job stories, none of them went blatantly outside of the criteria we discussed.  However, due to the nature of the assignment, the results expected from some of the tests were ambiguous and relied on our implementation, however simple or complex that may be.  In these cases, I generally consider the scenarios briefly, implemented them, then reworked them if I found my initial plans to be inefficient or otherwise faulty.  This was more common in the BDD portion, but similarly, I just assumed the return of some variable, as that could be switched to a check of program output (print) or removed entirely with few repercussions.
 
 Which model did you find most challenging?  Why?
 ================================================
@@ -34,3 +34,4 @@ Perhaps it's just inexperience, but I thought the test driven model was the easi
 How did you test that logging occurred only when desired?
 =========================================================
 
+I feel that I skipped over logging more than I should have, so I didn't really utilize it that much.  In a couple cases during the BDD portion, I used logging to output an error message if reading/writing of a file was unsuccessful, so checking that that was done successfully was just a matter of implementing an if else statement.  
