@@ -1,41 +1,35 @@
 from behave import given, when, then
 
+from source.BDD_Source import Calculator
+
 @Given('the user is researching speeds')
 def step_impl(context):
-    def prepare_for_input():
+    context.calc = Calculator()
 
 @When('a file name is entered')
 def step_impl(context):
-    def accept_input():
+    context.calc.read_file(filename='source/Test.txt')
 
 @Then('the cities, distances, and speeds will be read')
 def step_impl(context):
-    def read_file():
+    assert context.calc.readSuccess is True
 
-@When('an estimated speed is selected')
+@When('an estimated speed is entered')
 def step_impl(context):
-    def accept_input():
+    assert context.calc.get_speed() == 60
 
-@Then('the user can see which would be faster')
+@When('a hard drive size is entered')
 def step_impl(context):
-    def compare_options():
+    assert context.calc.get_size() == 1000
 
-@When('a hard drive size is selected')
+@When('a city is entered')
 def step_impl(context):
-    def accept_input():
-
-@Then('the user has more data')
-def step_impl(context):
-    def total_data():
-
-@When('the user enters information')
-def step_impl(context):
-    def accept_input():
+    assert context.calc.get_city() == 'Portland'
 
 @Then('the user can see which would be faster')
 def step_impl(context):
-    def compare_options():
+    assert context.calc.compare_speeds() == 'Hard Drive'
 
 @Then('the user can see the time difference')
 def step_impl(context):
-    def get_time_difference():
+    assert context.calc.get_time_difference() == 5900
