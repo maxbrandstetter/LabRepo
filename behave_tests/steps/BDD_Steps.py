@@ -33,3 +33,19 @@ def step_impl(context):
 @Then('the user can see the time difference')
 def step_impl(context):
     assert context.calc.get_time_difference() == 5900
+
+@When('a preset is entered')
+def step_impl(context):
+    context.calc.use_preset(preset='Ferrari')
+
+@Then('preset values replace current values')
+def step_impl(context):
+    assert context.calc.speed == 100
+
+@When('a new city is entered')
+def step_impl(context):
+    assert context.calc.get_city('Test Input', city_distance=200) == 'Test Input'
+
+@Then('write the data to a file')
+def step_impl(context):
+    assert context.calc.write_to_file() is True

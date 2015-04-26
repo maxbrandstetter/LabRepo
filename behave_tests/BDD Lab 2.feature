@@ -26,3 +26,17 @@ Feature: BDD What is Faster
     When a hard drive size is entered
     When a city is entered
     Then the user can see the time difference
+
+  Scenario: Preset Speed Selection
+    Given the user is researching speeds
+    When a preset is entered
+    Then preset values replace current values
+
+  Scenario: Create New City
+    Given the user is researching speeds
+    When a new city is entered
+
+  Scenario: Write City to File
+    Given the user is researching speeds
+    When a new city is entered
+    Then write the data to a file
