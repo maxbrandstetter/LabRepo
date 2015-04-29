@@ -1,3 +1,7 @@
 *.pyc
 *.html
 /.idea
+/htmlcov
+/.coverage
+/doc/source
+/doc/build

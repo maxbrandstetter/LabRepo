@@ -32,4 +32,3 @@ class TestPyTonaFunctions(TestCase):
         test_interface = Interface()
         self.assertEqual(test_interface.ask('How many seconds since|'), 'Was that a question?')
 
-    
