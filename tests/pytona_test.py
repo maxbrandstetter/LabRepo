@@ -5,8 +5,6 @@ from pyTona.main import Interface
 from unittest import TestCase
 from ReqTracer import requirements
 import getpass
-from pyTona.answer_funcs import feet_to_miles, hal_20
-
 
 class TestPyTonaFunctions(TestCase):
 

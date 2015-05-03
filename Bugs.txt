@@ -33,7 +33,7 @@
 
 **ISSUE Number: 4**
 
-**BRIEF: Who created Python question returns BDFL as written out string (Benevolent Dictator For Life)**
+**BRIEF: Who created Python question returns BDFL as written out string (Benevolent Dictator For Life) rather than just BDFL**
 
 **Steps to reproduce: 2**
 
