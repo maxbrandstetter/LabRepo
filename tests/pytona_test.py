@@ -19,6 +19,11 @@ class TestPyTonaFunctions(TestCase):
         test_interface = Interface()
         self.assertEqual(test_interface.ask('Who invented Python' + self.QMARK), 'Guido Rossum(Benevolent Dictator For Life)')
 
+        with self.assertRaises(Exception) as e:
+            test_interface.ask(1000)
+
+        self.assertEqual(e.exception.message, 'Not A String!')
+
     @requirements(['#0002', '#0003'])
     def test_keyword_acceptance(self):
         test_interface = Interface()
@@ -76,6 +81,7 @@ class TestPyTonaFunctions(TestCase):
     def test_no_previous_questions(self):
         test_interface = Interface()
         self.assertEqual(test_interface.teach(), 'Please ask a question first')
+        self.assertEqual(test_interface.correct(), 'Please ask a question first')
 
     @requirements(['#0013'])
     def test_existing_answer(self):
@@ -89,6 +95,10 @@ class TestPyTonaFunctions(TestCase):
         test_interface.ask('How many seconds since' + self.QMARK)
         test_interface.correct('A lot')
         self.assertEqual(test_interface.question_answers[test_interface.last_question].value, 'A lot')
+
+        test_interface.ask('What is the answer to life, the universe, and everything' + self.QMARK)
+        test_interface.teach('42')
+        self.assertEqual(test_interface.question_answers[test_interface.last_question].value, '42')
 
     @requirements(['#0017'])
     def test_feet_to_miles(self):
