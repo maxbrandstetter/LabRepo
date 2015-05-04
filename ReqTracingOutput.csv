@@ -1,23 +1,30 @@
 Requirement ID, Requirement Description, Requirement Method
 
-#0015, "The system shall accept and store answers to previous questions in the form of a string or a function pointer and store it as the generator function.", test_answer_type 
-#0021, "The system shall respond to the question ""Why don't you shutdown"" with ""I'm afraid I can't do that <username>""", test_shutdown_question 
-#0012, "If no previous question has been asked the system shall respond with ""Please ask a question first""", test_no_previous_questions 
-#0020, "The system shall respond to the question ""Why don't you understand me"" with ""Because you do not speak 1s and 0s""", test_understand_question 
-#0010, "The system shall provide a means of providing an answer to the previously asked question.", test_previous_question 
-#0017, "The system shall respond to the question ""What is <float> feet in miles"" with the the float value divided by 5280 and append ""miles"" to the end of  the return.", test_feet_to_miles 
-#0016, "If no previous question has been asked the system shall respond with ""Please ask a question first""", test_no_previous_questions 
 #0006, "The system shall determine an answer to a question as a correct if the keywords provide a 90% match and return the answer", test_90_match 
 #0007, "The system shall exclude any number value from match code and provide the values to generator function (if one exists)", test_number_detection 
 #0004, "If the system does not detect a question mark at end of the string it shall return ""Was that a question?""", test_no_question_mark 
 #0005, "The system shall break a question down into words separated by space", test_spacing_fail 
 #0002, "The system shall answer questions that begin with one of the following valid question keywords: ""How"", ""What"", ""Where"", ""Why"" and ""Who""", test_keyword_acceptance 
 #0003, "If the system does not detect a valid question keyword it shall return ""Was that a question?""", test_keyword_acceptance 
-#0013, "If an attempt is made to provide an answer to an already answered question the system shall respond with ""I don\'t know about that. I was taught differently"" and not update the question", test_existing_answer 
 #0001, "The system shall accept questions in the form of strings and attempt to answer them", test_string_acceptance 
-#0011, "The system shall accept and store answers to previous questions in the form of a string or a function pointer and store it as the generator function.", test_answer_type 
-#0014, "The system shall provide a means of updating an answer to the previously asked question.", test_answer_correction 
-#0019, "The system shall respond to the question ""Who invented Python"" with ""Guido Rossum(BFDL)""", test_python_creator 
-#0018, "The system shall respond to the question ""How many seconds since <date time>"" with the number of seconds from that point of day till now.", test_seconds_passed_question 
+#0024, "The system shall respond to the question ""Who else is here"" with a list of users", test_get_users test_get_users_fail 
+#0025, "When determining users the system shall connect to the server at ip address 192.168.64.3 port 1337 and sending a message ""Who?""", test_get_users test_get_users_fail 
+#0026, "If a response is received from the server the user list shall be parsed from a ""$"" seperated list of users", test_get_users 
+#0027, "If no response is received from the server the system shall return ""IT'S A TRAAAPPPP""", test_get_users_fail 
+#0020, "The system shall respond to the question ""Why don't you understand me"" with ""Because you do not speak 1s and 0s""", test_understand_question 
+#0021, "The system shall respond to the question ""Why don't you shutdown"" with ""I'm afraid I can't do that <username>""", test_shutdown_question 
+#0022, "The system shall respond to the question ""Where am I"" with the local git branch name or ""unknown"" if it can't be determined", test_fail_get_git_branch test_get_git_branch 
+#0023, "The system shall respond to the question ""Where are you"" with the URL for the git repo or ""unknown"" if it can't be determined", test_fail_get_git_url test_get_git_url 
+#0028, "The system shall respond to the question ""What is the <int> digit of the Fibonacci sequence?"" with the correct number from the fibonnacci sequence if the number has been found", test_get_fib_num 
 #0008, "When a valid match is determined the system shall return the answer", test_valid_match 
+#0029, "If the system has not determined the requested digit of the Fibonacci sequence it will respond with A)""Thinking..."", B)""One second"" or C)""cool your jets"" based on a randomly generated number (A is 60% chance, B is 30% chance, C is 10% chance)", test_get_fib_fail_response 
+#0015, "The system shall accept and store answers to previous questions in the form of a string or a function pointer and store it as the generator function.", test_answer_type 
+#0014, "The system shall provide a means of updating an answer to the previously asked question.", test_answer_correction 
+#0017, "The system shall respond to the question ""What is <float> feet in miles"" with the the float value divided by 5280 and append ""miles"" to the end of  the return.", test_feet_to_miles 
+#0016, "If no previous question has been asked the system shall respond with ""Please ask a question first""", test_no_previous_questions 
+#0011, "The system shall accept and store answers to previous questions in the form of a string or a function pointer and store it as the generator function.", test_answer_type 
+#0010, "The system shall provide a means of providing an answer to the previously asked question.", test_previous_question 
+#0013, "If an attempt is made to provide an answer to an already answered question the system shall respond with ""I don\'t know about that. I was taught differently"" and not update the question", test_existing_answer 
+#0012, "If no previous question has been asked the system shall respond with ""Please ask a question first""", test_no_previous_questions 
 #0009, "When no valid match is determined the system shall return ""I don't know, please provide the answer""", test_invalid_match 
+#0019, "The system shall respond to the question ""Who invented Python"" with ""Guido Rossum(BDFL)""", test_python_creator 
