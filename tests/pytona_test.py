@@ -4,6 +4,7 @@ Tests for pyTona, as per the requirements listed.
 from pyTona.main import Interface
 from unittest import TestCase
 from ReqTracer import requirements
+import pyTona.answer_funcs as answer
 import getpass
 import subprocess
 import mock
@@ -23,7 +24,6 @@ def mutate_test(func, *args, **kwargs):
         mutate_test.functions[func] = None
         return func(*args, **kwargs)
 
-
 class TestPyTonaFunctions(TestCase):
 
     """
@@ -31,6 +31,10 @@ class TestPyTonaFunctions(TestCase):
     """
     
     QMARK = chr(0x3F)
+
+    def tearDown(self):
+        if answer.seq_finder:
+            answer.seq_finder.stop()
 
     @requirements(['#0001'])
     def test_string_acceptance(self):
