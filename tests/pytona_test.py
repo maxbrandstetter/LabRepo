@@ -10,6 +10,20 @@ import mock
 import socket
 import random
 
+
+def mutate_test(func, *args, **kwargs):
+    """
+    Best I can think of for messing with data mutation.
+    """
+    mutate_test.functions = {}
+
+    if func in mutate_test.functions:
+        return None
+    else:
+        mutate_test.functions[func] = None
+        return func(*args, **kwargs)
+
+
 class TestPyTonaFunctions(TestCase):
 
     """
@@ -17,7 +31,7 @@ class TestPyTonaFunctions(TestCase):
     """
     
     QMARK = chr(0x3F)
-    
+
     @requirements(['#0001'])
     def test_string_acceptance(self):
         test_interface = Interface()
@@ -62,7 +76,8 @@ class TestPyTonaFunctions(TestCase):
     @requirements(['#0008'])
     def test_valid_match(self):
         test_interface = Interface()
-        self.assertEqual(test_interface.ask('Why don\'t you shutdown' + self.QMARK), "I'm afraid I can't do that {0}".format(getpass.getuser()))
+        shutoff = mutate_test(test_interface.ask, 'Why don\'t you shutdown' + self.QMARK)
+        self.assertEqual(shutoff, "I'm afraid I can't do that {0}".format(getpass.getuser()))
 
     @requirements(['#0009'])
     def test_invalid_match(self):
