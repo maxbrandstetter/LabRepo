@@ -79,3 +79,19 @@ Username shall be determined by the name of the currently logged in user.
 #0033 The system shall stop generating Fibonacci sequence numbers once it has identified the first 1,000 numbers
 
 #0034 The system shall generate the first 1,000 Fibonacci sequence numbers in under 60 seconds
+
+#0035 When asked, the system shall calculate the square of a given number up to 1000 in under 5 ms
+
+#0036 The system shall return "I can't count that high" if the requested square exceeds 1000
+
+#0037 When asked, the system shall calculate the cube root of a given number up to 1000000 in under 5 ms
+
+#0038 The system shall return "I can't count that high" if the cube root exceeds 1000000
+
+#0039 When asked, the system shall find the factorial of a given number up to 100; if the system has not determined the factorial, it shall return "I'm working on it..."
+
+#0040 The system shall return "I can't count that high" if the requested factorial exceeds 100
+
+#0041 When asked, the system shall read 1000 bytes from a read_test.txt file in under 3 ms
+
+#0042 The system shall return "File not found" if read_test.txt does not exist

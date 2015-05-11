@@ -10,7 +10,13 @@ import subprocess
 import mock
 import socket
 import random
+import time
 
+THOUSANDTH_FIB_STR = '4346655768693745643568852767504062580256466051737178040248172908' +\
+                     '95365554179490518904038798400792551692959225930803226347752096896' +\
+                     '23239873322471161642996440906533187938298969649928516003704476137' +\
+                     '795166849228875'
+THOUSANDTH_FIB_NUM = long(THOUSANDTH_FIB_STR)
 
 def mutate_test(func, *args, **kwargs):
     """
@@ -35,7 +41,9 @@ class TestPyTonaFunctions(TestCase):
     def tearDown(self):
         if answer.seq_finder:
             answer.seq_finder.stop()
-
+        if answer.fact_finder:
+            answer.fact_finder.stop()
+    """
     @requirements(['#0001'])
     def test_string_acceptance(self):
         test_interface = Interface()
@@ -128,13 +136,6 @@ class TestPyTonaFunctions(TestCase):
         test_interface = Interface()
         self.assertEqual(test_interface.ask('What is 10560 feet in miles' + self.QMARK), '2.0 miles')
 
-    """
-    @requirements(['#0018'])
-    def test_seconds_passed_question(self):
-        test_interface = Interface()
-        self.assertEqual(test_interface.ask('How many seconds since 12' + self.QMARK), '3600')
-    """
-
     @requirements(['#0019'])
     def test_python_creator(self):
         test_interface = Interface()
@@ -206,7 +207,7 @@ class TestPyTonaFunctions(TestCase):
 
             self.assertEqual(test_interface.ask('Who else is here' + self.QMARK), ['Harry', 'Gary', 'Mary'])
             trial.send.assert_called_with('Who?')
-            trial.connect.assert_called_with(('192.168.64.3', '1337'))
+            trial.connect.assert_called_with(('192.168.64.3', 1337))
 
     @requirements(['#0024', '#0025', '#0027'])
     def test_get_users_fail(self):
@@ -238,7 +239,103 @@ class TestPyTonaFunctions(TestCase):
 
         self.assertEqual(test0, 'cool your jets')
         self.assertEqual(test1, 'cool your jets')
-        self.assertEqual(test3, 'cool your jets')
-        self.assertEqual(test6, 'One second')
+        self.assertEqual(test3, 'One second')
+        self.assertEqual(test6, 'Thinking...')
         self.assertEqual(test9, 'Thinking...')
 
+    @requirements(['#0030'])
+    def test_million_qa(self):
+        test_interface = Interface()
+
+        question = "What is {0}?"
+        answer = "The answer is obviously {0}"
+
+        for i in range(0, 1000000, 1):
+            test_interface.last_question = question[0:-1].format(i)
+            test_interface.correct(answer.format(i))
+
+        self.assertGreaterEqual(len(test_interface.question_answers), 1000000)
+
+    @requirements(['#0031'])
+    def test_5ms_store_time(self):
+        test_interface = Interface()
+
+        test_interface.ask("How is the weather?")
+        start_time = time.clock()
+        test_interface.teach("Quite sunny for once.")
+        end_time = time.clock()
+
+        self.assertLessEqual((end_time - start_time) * 1000, 5)
+
+        start_time = time.clock()
+        test_interface.correct("We're in Oregon, so probably rainy.")
+        end_time = time.clock()
+
+        self.assertLessEqual((end_time - start_time) * 1000, 5)
+
+    @requirements(['#0032'])
+    def test_5ms_response_time(self):
+        test_interface = Interface()
+
+        start_time = time.clock()
+        question = test_interface.ask("What is 5280 feet in miles" + self.QMARK)
+        end_time = time.clock()
+
+        self.assertLessEqual((end_time - start_time) * 1000, 5)
+        self.assertEqual(question, "{0} miles".format(float(5280) / 5280))
+
+    @requirements(['#0033', '#0034'])
+    def test_1000_fib_only(self):
+        test_interface = Interface()
+
+        start_time = time.clock()
+        while(test_interface.ask('What is the 1000 digit of the Fibonacci sequence' + self.QMARK) in
+                  ("cool your jets", "One second", "Thinking...")):
+            pass
+        end_time = time.clock()
+
+        self.assertLessEqual((end_time - start_time), 60)
+        self.assertEqual(test_interface.ask("What is the 1000 digit of the Fibonacci sequence" + self.QMARK),
+                         THOUSANDTH_FIB_NUM)
+
+        time.sleep(2)
+
+        self.assertIn(test_interface.ask("What is the 1001 digit of the Fibonacci sequence" + self.QMARK),
+                      ("cool your jets", "One second", "Thinking..."))
+
+    """
+    @requirements(['#0035', '#0036'])
+    def test_square_calculator(self):
+        test_interface = Interface()
+
+        start_time = time.clock()
+        question = test_interface.ask('What is the square of 1000' + self.QMARK)
+        end_time = time.clock()
+
+        self.assertLessEqual((end_time - start_time) * 1000, 5)
+        self.assertEqual(question, 1000000)
+        self.assertEqual(test_interface.ask('What is the square of 1001' + self.QMARK), "I can't count that high")
+
+    @requirements(['#0037', '#0038'])
+    def test_cube_root_calculator(self):
+        test_interface = Interface()
+
+        start_time = time.clock()
+        question = test_interface.ask('What is the cube root of 1000000' + self.QMARK)
+        end_time = time.clock()
+
+        self.assertLessEqual((end_time - start_time) * 1000, 5)
+        self.assertEqual(question, 100)
+        self.assertEqual(test_interface.ask('What is the cube root of 1000001' + self.QMARK), "I can't count that high")
+
+    @requirements(['#0039', '#0040'])
+    def test_find_100_fact(self):
+        test_interface = Interface()
+
+        question = test_interface.ask('What is the factorial of 100' + self.QMARK)
+        self.assertEqual(question, "I'm working on it...")
+
+        while test_interface.ask('What is the factorial of 100' + self.QMARK) is "I'm working on it...":
+            pass
+
+        self.assertEqual(question, 5)
