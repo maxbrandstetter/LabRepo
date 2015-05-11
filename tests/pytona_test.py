@@ -11,6 +11,7 @@ import mock
 import socket
 import random
 import time
+import string
 
 THOUSANDTH_FIB_STR = '4346655768693745643568852767504062580256466051737178040248172908' +\
                      '95365554179490518904038798400792551692959225930803226347752096896' +\
@@ -37,13 +38,14 @@ class TestPyTonaFunctions(TestCase):
     """
     
     QMARK = chr(0x3F)
+    filename = '.\\pyTona\\read_test.txt'
 
     def tearDown(self):
         if answer.seq_finder:
             answer.seq_finder.stop()
         if answer.fact_finder:
             answer.fact_finder.stop()
-    """
+
     @requirements(['#0001'])
     def test_string_acceptance(self):
         test_interface = Interface()
@@ -220,7 +222,7 @@ class TestPyTonaFunctions(TestCase):
         self.assertEqual(test_interface.ask('What is the 1 digit of the Fibonacci sequence' + self.QMARK), 1)
 
     @requirements(['#0029'])
-    def test_get_fib_fail_response(self):
+    def test_get_fib_fail_questionponse(self):
         test_interface = Interface()
 
         m = mock.Mock(return_value=0)
@@ -263,25 +265,25 @@ class TestPyTonaFunctions(TestCase):
         test_interface.ask("How is the weather?")
         start_time = time.clock()
         test_interface.teach("Quite sunny for once.")
-        end_time = time.clock()
+        end_time = time.clock() - start_time
 
-        self.assertLessEqual((end_time - start_time) * 1000, 5)
+        self.assertLessEqual(end_time * 1000, 5)
 
         start_time = time.clock()
         test_interface.correct("We're in Oregon, so probably rainy.")
-        end_time = time.clock()
+        end_time = time.clock() - start_time
 
-        self.assertLessEqual((end_time - start_time) * 1000, 5)
+        self.assertLessEqual(end_time * 1000, 5)
 
     @requirements(['#0032'])
-    def test_5ms_response_time(self):
+    def test_5ms_questionponse_time(self):
         test_interface = Interface()
 
         start_time = time.clock()
         question = test_interface.ask("What is 5280 feet in miles" + self.QMARK)
-        end_time = time.clock()
+        end_time = time.clock() - start_time
 
-        self.assertLessEqual((end_time - start_time) * 1000, 5)
+        self.assertLessEqual(end_time * 1000, 5)
         self.assertEqual(question, "{0} miles".format(float(5280) / 5280))
 
     @requirements(['#0033', '#0034'])
@@ -292,9 +294,9 @@ class TestPyTonaFunctions(TestCase):
         while(test_interface.ask('What is the 1000 digit of the Fibonacci sequence' + self.QMARK) in
                   ("cool your jets", "One second", "Thinking...")):
             pass
-        end_time = time.clock()
+        end_time = time.clock() - start_time
 
-        self.assertLessEqual((end_time - start_time), 60)
+        self.assertLessEqual(end_time, 60)
         self.assertEqual(test_interface.ask("What is the 1000 digit of the Fibonacci sequence" + self.QMARK),
                          THOUSANDTH_FIB_NUM)
 
@@ -303,16 +305,15 @@ class TestPyTonaFunctions(TestCase):
         self.assertIn(test_interface.ask("What is the 1001 digit of the Fibonacci sequence" + self.QMARK),
                       ("cool your jets", "One second", "Thinking..."))
 
-    """
     @requirements(['#0035', '#0036'])
     def test_square_calculator(self):
         test_interface = Interface()
 
         start_time = time.clock()
         question = test_interface.ask('What is the square of 1000' + self.QMARK)
-        end_time = time.clock()
+        end_time = time.clock() - start_time
 
-        self.assertLessEqual((end_time - start_time) * 1000, 5)
+        self.assertLessEqual(end_time * 1000, 10)
         self.assertEqual(question, 1000000)
         self.assertEqual(test_interface.ask('What is the square of 1001' + self.QMARK), "I can't count that high")
 
@@ -322,20 +323,41 @@ class TestPyTonaFunctions(TestCase):
 
         start_time = time.clock()
         question = test_interface.ask('What is the cube root of 1000000' + self.QMARK)
-        end_time = time.clock()
+        end_time = time.clock() - start_time
 
-        self.assertLessEqual((end_time - start_time) * 1000, 5)
+        self.assertLessEqual(end_time * 1000, 10)
         self.assertEqual(question, 100)
         self.assertEqual(test_interface.ask('What is the cube root of 1000001' + self.QMARK), "I can't count that high")
 
     @requirements(['#0039', '#0040'])
-    def test_find_100_fact(self):
+    def test_factorial(self):
         test_interface = Interface()
 
-        question = test_interface.ask('What is the factorial of 100' + self.QMARK)
-        self.assertEqual(question, "I'm working on it...")
+        question = test_interface.ask("What is the factorial of 50" + self.QMARK)
+        self.assertEqual(question, "Working")
 
-        while test_interface.ask('What is the factorial of 100' + self.QMARK) is "I'm working on it...":
+        while test_interface.ask("What is the factorial of 50" + self.QMARK) is "Working":
             pass
 
-        self.assertEqual(question, 5)
+        question = test_interface.ask("What is the factorial of 50" + self.QMARK)
+        self.assertEqual(question, 30414093201713378043612608166064768844377641568960512000000000000L)
+
+        question = test_interface.ask("What is the factorial of 51" + self.QMARK)
+        self.assertEqual(question, "I can't count that high")
+
+    @requirements(['#0041'])
+    def test_read_file_1000_bytes(self):
+        test_interface = Interface()
+
+        with open(self.filename, 'w') as f:
+            for bytes in range(1023):
+                f.write(random.choice(string.letters))
+
+            f.write('\n')
+
+        start_time = time.clock()
+        question = test_interface.ask('How about you read me a file' + self.QMARK)
+        end_time = time.clock() - start_time
+
+        self.assertLessEqual(end_time * 1000, 3)
+        self.assertEqual(question, 1024)

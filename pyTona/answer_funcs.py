@@ -74,7 +74,7 @@ def get_fibonacci_seq(index):
     index = int(index)
     global seq_finder
     if seq_finder is None:
-        
+
         seq_finder = FibSeqFinder()
         seq_finder.start()
 
@@ -101,10 +101,11 @@ class FactSeqFinder(threading.Thread):
 
     def run(self):
         self.num_facts = 0
-        while not self._stop.isSet() and self.num_facts <= 100:
+        while not self._stop.isSet() and self.num_facts <= 50:
             self.num_facts += 1
             self.fact_list.append(self.fact_list[-1] * self.num_facts)
-            time.sleep(.1)
+            time.sleep(.04)
+
 
 def get_factorial_seq(index):
     index = int(index)
@@ -113,11 +114,10 @@ def get_factorial_seq(index):
         fact_finder = FactSeqFinder()
         fact_finder.start()
 
-    if index > 100:
+    if index > 50:
         return "I can't count that high"
-
-    if index > fact_finder.num_facts:
-        return "I'm working on it..."
+    elif index > fact_finder.num_facts:
+        return "Working"
     else:
         return fact_finder.fact_list[index]
 
@@ -163,8 +163,9 @@ def get_cube_root(num):
         return "I can't count that high"
 
 def get_file():
+    filename = '.\\pyTona\\read_test.txt'
     try:
-        with open('.\\pyTona\\read_test.txt') as f:
+        with open(filename) as f:
             num_bytes = f.read()
             return len(num_bytes)
     except:
