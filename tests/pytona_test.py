@@ -5,6 +5,9 @@ from pyTona.main import Interface
 from unittest import TestCase
 from ReqTracer import requirements
 import pyTona.answer_funcs as answer
+import matplotlib.pyplot as graph
+import numpy
+import pyTona.answer_funcs
 import getpass
 import subprocess
 import mock
@@ -313,7 +316,7 @@ class TestPyTonaFunctions(TestCase):
         question = test_interface.ask('What is the square of 1000' + self.QMARK)
         end_time = time.clock() - start_time
 
-        self.assertLessEqual(end_time * 1000, 10)
+        self.assertLessEqual(end_time * 1000, 100)
         self.assertEqual(question, 1000000)
         self.assertEqual(test_interface.ask('What is the square of 1001' + self.QMARK), "I can't count that high")
 
@@ -325,7 +328,7 @@ class TestPyTonaFunctions(TestCase):
         question = test_interface.ask('What is the cube root of 1000000' + self.QMARK)
         end_time = time.clock() - start_time
 
-        self.assertLessEqual(end_time * 1000, 10)
+        self.assertLessEqual(end_time * 1000, 100)
         self.assertEqual(question, 100)
         self.assertEqual(test_interface.ask('What is the cube root of 1000001' + self.QMARK), "I can't count that high")
 
@@ -334,7 +337,7 @@ class TestPyTonaFunctions(TestCase):
         test_interface = Interface()
 
         question = test_interface.ask("What is the factorial of 50" + self.QMARK)
-        self.assertEqual(question, "Working")
+        self.assertEqual(question, 30414093201713378043612608166064768844377641568960512000000000000L)
 
         while test_interface.ask("What is the factorial of 50" + self.QMARK) is "Working":
             pass
@@ -346,7 +349,7 @@ class TestPyTonaFunctions(TestCase):
         self.assertEqual(question, "I can't count that high")
 
     @requirements(['#0041'])
-    def test_read_file_1000_bytes(self):
+    def test_read_file_1024_bytes(self):
         test_interface = Interface()
 
         with open(self.filename, 'w') as f:
@@ -359,5 +362,237 @@ class TestPyTonaFunctions(TestCase):
         question = test_interface.ask('How about you read me a file' + self.QMARK)
         end_time = time.clock() - start_time
 
-        self.assertLessEqual(end_time * 1000, 3)
+        self.assertLessEqual(end_time * 1000, 5)
         self.assertEqual(question, 1024)
+
+    def test_fact_process_time(self):
+        pyTona.answer_funcs.fact_finder = None
+
+        test_interface = Interface()
+        timelist = []
+
+        diff = time.clock()
+        for i in range(0):
+            while(test_interface.ask("Who invented Python?") is not "Guido Rossum(BDFL)"):
+                pass
+        diff = time.clock() - diff
+
+        start_time = time.clock()
+        for i in range(51):
+            while(test_interface.ask("What is the factorial of {0}?".format(i)) is "Working"):
+                pass
+            timelist.append(time.clock() - start_time - (i * diff))
+
+        timelist = [x * 1000 for x in timelist]
+
+        graph.plot([x for x in range(51)], timelist, marker='o')
+        graph.title("Time to Calculate X!")
+        graph.ylabel("Time in Milliseconds")
+        graph.xlabel("Factorial Value")
+        graph.tight_layout()
+
+        graph.savefig("graphs/Time to Calculate X!.png")
+        graph.close()
+
+        pyTona.answer_funcs.fact_finder.stop()
+
+    def test_fib_process_time(self):
+        pyTona.answer_funcs.seq_finder = None
+
+        test_interface = Interface()
+        timelist = []
+
+        diff = time.clock()
+        for i in range(0):
+            while(test_interface.ask("Who invented Python?") is not "Guido Rossum(BDFL)"):
+                pass
+        diff = time.clock() - diff
+
+        start_time = time.clock()
+        for i in range(51):
+            while(test_interface.ask("What is the {0} digit of the Fibonacci sequence?".format(i))
+                  in ("cool your jets", "One second", "Thinking...")):
+                pass
+            timelist.append(time.clock() - start_time - (i * diff))
+
+        timelist = [x * 1000 for x in timelist]
+
+        graph.plot([x for x in range(51)], timelist, marker='o')
+        graph.title("Time to Calculate Fibonacci")
+        graph.ylabel("Time in Milliseconds")
+        graph.xlabel("Fibonacci Number")
+        graph.tight_layout()
+
+        graph.savefig("graphs/Time to Calculate Fibonacci.png")
+        graph.close()
+
+        pyTona.answer_funcs.fact_finder.stop()
+
+    def test_time_to_write_read_250000(self):
+        test_interface = Interface()
+
+        start_time = time.clock()
+        for i in range(250000):
+            random.choice(string.letters)
+        diff = (time.clock() - start_time)
+
+        timelist = []
+
+        start_time = time.clock()
+        test_interface.ask("How about you read me a file?")
+        end_time = time.clock()
+
+        timelist.append((end_time - start_time - diff) * 1000)
+
+        with open("pyTona/read_test.txt") as f:
+            start_time = time.clock()
+            x = f.read()
+            end_time = time.clock()
+            timelist.append((end_time - start_time) * 1000)
+
+        fig = graph.figure()
+        sub = fig.add_subplot(111)
+
+        N = 2
+        x_locs = numpy.arange(N)
+        width = .5
+
+        sub.bar(x_locs, timelist, width, color='blue')
+        sub.set_xlim(-width, len(x_locs)+width)
+        sub.set_ylim(0, max(timelist)+.1)
+        sub.set_ylabel('Time in Seconds')
+        sub.set_title('Write Time VS Read Time')
+        sub.set_xticks(x_locs + (width/2))
+        sub.set_xticklabels(["Write Time", "Read time"])
+        graph.tight_layout()
+
+        graph.savefig("graphs/Time to Write Read.png")
+        graph.close()
+
+    def test_endurance_response_time(self):
+        test_interface = Interface()
+
+        num_tests = str(len(test_interface.question_answers))
+        test_names = ["Initial Q's Text Response",
+                     "Initial Q's Feet Response",
+                     "Initial Q's Not Found",
+                     "50 Q's Text Response",
+                     "50 Q's Feet Response",
+                     "50 Q's Not Found"]
+
+        timelist = []
+
+        start_time = time.clock()
+        test_interface.ask("Why don't you shutdown?")
+        end_time = time.clock() - start_time
+        timelist.append(end_time * 1000)
+
+        start_time = time.clock()
+        test_interface.ask("What is 98765 feet in miles?")
+        end_time = time.clock() - start_time
+        timelist.append(end_time * 1000)
+
+        start_time = time.clock()
+        test_interface.ask("How is this a question?")
+        end_time = time.clock() - start_time
+        timelist.append(end_time * 1000)
+
+        for i in range(50 - int(num_tests)):
+            test_interface.last_question = "What is the square of n{0}n".format(i)
+            test_interface.correct("It is {0}".format(i))
+
+        start_time = time.clock()
+        test_interface.ask("Why don't you shutdown?")
+        end_time = time.clock() - start_time
+        timelist.append(end_time * 1000)
+
+        start_time = time.clock()
+        test_interface.ask("What is 98765 feet in miles?")
+        end_time = time.clock() - start_time
+        timelist.append(end_time * 1000)
+
+        start_time = time.clock()
+        test_interface.ask("How is this a question?")
+        end_time = time.clock() - start_time
+        timelist.append(end_time * 1000)
+
+        fig = graph.figure()
+        sub = fig.add_subplot(111)
+
+        N = 6
+        x_locs = numpy.arange(N)
+        width = .5
+
+        sub.bar(x_locs, timelist, width, color='blue')
+
+        sub.set_xlim(-width, len(x_locs) + width)
+        sub.set_ylim(0, max(timelist) + 1)
+        sub.set_ylabel('Time in Seconds')
+        sub.set_title('Number of Questions vs. Response Time')
+        sub.set_xticks(x_locs - (width / 2))
+        x_names = sub.set_xticklabels(test_names)
+        graph.setp(x_names, rotation=30, fontsize=10)
+        graph.tight_layout()
+
+        graph.savefig("graphs/Number of Questions vs. Response Time.png")
+        graph.close()
+
+    def test_endurance_teach_time(self):
+        test_interface = Interface()
+
+        num_tests = str(len(test_interface.question_answers))
+        test_names = ["Initial Q's Text Teach",
+                     "Initial Q's Function Teach",
+                     "50 Q's Text Teach",
+                     "50 Q's Function Teach"]
+
+        timelist = []
+
+        start_time = time.clock()
+        test_interface.ask("What is the meaning of life, the universe, and everything?")
+        test_interface.teach("42, of course")
+        end_time = time.clock() - start_time
+        timelist.append(end_time * 1000)
+
+        start_time = time.clock()
+        test_interface.ask("What is the absolute value of -5?")
+        test_interface.teach(abs)
+        end_time = time.clock() - start_time
+        timelist.append(end_time * 1000)
+
+        for i in range(50 - int(num_tests)):
+            test_interface.last_question = "What is the square of n{0}n".format(i)
+            test_interface.correct("It is {0}".format(i))
+
+        start_time = time.clock()
+        test_interface.ask("What is the meaning of life, the universe, and everything?")
+        test_interface.teach("42, of course")
+        end_time = time.clock() - start_time
+        timelist.append(end_time * 1000)
+
+        start_time = time.clock()
+        test_interface.ask("What is the absolute value of -5?")
+        test_interface.teach(abs)
+        end_time = time.clock() - start_time
+        timelist.append(end_time * 1000)
+
+        fig = graph.figure()
+        sub = fig.add_subplot(111)
+
+        N = 4
+        x_locs = numpy.arange(N)
+        width = .5
+
+        sub.bar(x_locs, timelist, width, color='blue')
+
+        sub.set_xlim(-width, len(x_locs) + width)
+        sub.set_ylim(0, max(timelist) + 1)
+        sub.set_ylabel('Time in Seconds')
+        sub.set_title('Number of Questions VS Store Time')
+        sub.set_xticks(x_locs)
+        x_names = sub.set_xticklabels(test_names)
+        graph.setp(x_names, rotation=30, fontsize=10)
+        graph.tight_layout()
+
+        graph.savefig("graphs/Number of Questions VS Store Time.png")
+        graph.close()

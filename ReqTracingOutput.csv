@@ -21,15 +21,14 @@ Requirement ID, Requirement Description, Requirement Method
 #0022, "The system shall respond to the question ""Where am I"" with the local git branch name or ""Unknown"" if it can't be determined", test_fail_get_git_branch test_get_git_branch 
 #0023, "The system shall respond to the question ""Where are you"" with the URL for the git repo or ""Unknown"" if it can't be determined", test_fail_get_git_url test_get_git_url 
 #0028, "The system shall respond to the question ""What is the <int> digit of the Fibonacci sequence?"" with the correct number from the fibonnacci sequence if the number has been found", test_get_fib_num 
-#0035, "When asked, the system shall calculate the square of a given number up to 1000 in under 5 ms", test_square_calculator 
+#0035, "When asked, the system shall calculate the square of a given number up to 1000 in under 100 ms", test_square_calculator 
 #0008, "When a valid match is determined the system shall return the answer", test_valid_match 
 #0036, "The system shall return ""I can't count that high"" if the requested square exceeds 1000", test_square_calculator 
-#0042, "The system shall return ""File not found"" if read_test.txt does not exist", 
-#0037, "When asked, the system shall calculate the cube root of a given number up to 1000000 in under 5 ms", test_cube_root_calculator 
-#0040, "The system shall return ""I can't count that high"" if the requested factorial exceeds 100", test_factorial 
+#0037, "When asked, the system shall calculate the cube root of a given number up to 1000000 in under 100 ms", test_cube_root_calculator 
+#0040, "The system shall return ""I can't count that high"" if the requested factorial exceeds 50", test_factorial 
 #0029, "If the system has not determined the requested digit of the Fibonacci sequence it will respond with A)""Thinking..."", B)""One second"" or C)""cool your jets"" based on a randomly generated number (A is 60% chance, B is 30% chance, C is 10% chance)", test_get_fib_fail_questionponse 
 #0038, "The system shall return ""I can't count that high"" if the cube root exceeds 1000000", test_cube_root_calculator 
-#0041, "When asked, the system shall read 1000 bytes from a read_test.txt file in under 3 ms", test_read_file_1000_bytes 
+#0041, "When asked, the system shall read 1024 bytes from a read_test.txt file in under 5 ms", test_read_file_1024_bytes 
 #0015, "The system shall accept and store answers to previous questions in the form of a string or a function pointer and store it as the generator function.", test_answer_type 
 #0014, "The system shall provide a means of updating an answer to the previously asked question.", test_answer_correction 
 #0017, "The system shall respond to the question ""What is <float> feet in miles"" with the the float value divided by 5280 and append "" miles"" to the end of  the return.", test_feet_to_miles 
@@ -38,6 +37,6 @@ Requirement ID, Requirement Description, Requirement Method
 #0010, "The system shall provide a means of providing an answer to the previously asked question.", test_previous_question 
 #0013, "If an attempt is made to provide an answer to an already answered question the system shall respond with ""I don\'t know about that. I was taught differently"" and not update the question", test_existing_answer 
 #0012, "If no previous question has been asked the system shall respond with ""Please ask a question first""", test_no_previous_questions 
-#0039, "When asked, the system shall find the factorial of a given number up to 100; if the system has not determined the factorial, it shall return ""I'm working on it...""", test_factorial 
+#0039, "When asked, the system shall find the factorial of a given number up to 50; if the system has not determined the factorial, it shall return ""I'm working on it...""", test_factorial 
 #0009, "When no valid match is determined the system shall return ""I don't know, please provide the answer""", test_invalid_match 
 #0019, "The system shall respond to the question ""Who invented Python"" with ""Guido Rossum(BDFL)""", test_python_creator 
