@@ -4,13 +4,13 @@ import random
 import time
 
 IGNORED_BUGS = [
-        # 'You found bug 1', 
-        # 'You found bug 2', 
-        # 'You found bug 3', 
-        # 'You found bug 4', 
-        # 'You found bug 5', 
-        # 'You found bug 6', 
-        # 'You found bug 7'
+        'You found bug 1',
+        'You found bug 2',
+        'You found bug 3',
+        'You found bug 4',
+        'You found bug 5',
+        'You found bug 6',
+        #'You found bug 7'
         ]
 
 KNOWN_QUESTION_ANSWERS = {"What is the answer to everything?": "42"}
