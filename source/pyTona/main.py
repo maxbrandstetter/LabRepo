@@ -1,5 +1,5 @@
 from pyTona.question_answer import QA
-from pyTona.answer_funcs import feet_to_miles, hal_20, get_git_branch, get_git_url, get_other_users, get_fibonacci_seq, get_square, get_cube_root, get_factorial_seq, get_file
+from pyTona.answer_funcs import feet_to_miles, hal_20, get_git_branch, get_git_url, get_other_users, get_fibonacci_seq
 
 import difflib
 NOT_A_QUESTION_RETURN = "Was that a question?"
@@ -27,11 +27,7 @@ class Interface(object):
             'Where am I': QA('Where am I', get_git_branch),
             'Where are you': QA('Where are you', get_git_url),
             'Who else is here': QA('Who else is here', get_other_users),
-            'What is the digit of the Fibonacci sequence': QA('What is the digit of the Fibonacci sequence', get_fibonacci_seq),
-            'What is the square of': QA('What is the square of', get_square),
-            'What is the cube root of': QA('What is the cube root of', get_cube_root),
-            'What is the factorial of': QA('What is the factorial of', get_factorial_seq),
-            'How about you read me a file': QA('How about you read me a file', get_file),
+            'What is the digit of the Fibonacci sequence': QA('What is the digit of the Fibonacci sequence', get_fibonacci_seq)
         }
         self.last_question = None
 
